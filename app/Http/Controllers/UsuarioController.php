@@ -34,7 +34,8 @@ class UsuarioController extends Controller
             'rol_id'=> 'required',
             'nombre' => 'requierd',
             'email' => 'requierd|email',
-            'password' => 'requierd'
+            'password' => 'requierd',
+            'email_verified_at'=> 'required'
         ]);
         if ($validator->fails()) {
             $data = [
@@ -48,6 +49,7 @@ class UsuarioController extends Controller
             'rol_id'=>3,
             'nombre' => $request->nombre,
             'email' => $request->email,
+            'email_verified_at'=>$request->email_verified_at,
             'password' => $request->password
         ]);
         if (!$usuario) {
