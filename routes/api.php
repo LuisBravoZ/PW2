@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 })->middleware('auth:sanctum');
  */
-Route::get('/',[UsuarioController::class,'index'] );
-Route::get('/registro_unico/{id}',[UsuarioController::class,'registro_unico']);
-Route::post('/store',[UsuarioController::class,'store']);
+
+ //CRUD de usuario
+Route::get('/',[UsuarioController::class,'index'] )->name('usuario.index');///listar todos los usuario
+Route::get('/usuario/{id}',[UsuarioController::class,'registro_unico'])->name('usuario.show');//mostrar usuario por id
+Route::post('/usuario',[UsuarioController::class,'store'])->name('usaurio.create');//crear nuevo usuario
+Route::delete('/usuario/{id}',[UsuarioController::class,'destroy'])->name('usuario.destroy');//borrar un usuario
+Route::put('/usuario/{id}',[UsuarioController::class,'update'])->name('usuario.update');//actuaizar usuario
+
+//
