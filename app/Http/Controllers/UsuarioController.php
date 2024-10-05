@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use App\Models\Rol;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
-use function Laravel\Prompts\password;
+
 
 class UsuarioController extends Controller
 {
@@ -31,7 +31,6 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            //'rol_id' => 3,//'required|exists:rol,id',
             'nombre' => 'required',
             'email' => 'required|email|unique:usuario',
             'password' => 'required',
@@ -101,7 +100,6 @@ class UsuarioController extends Controller
     public function destroy($id)
     {
 
-
         // Buscar el usuario por ID
         $usuario = Usuario::find($id);
 
@@ -114,4 +112,24 @@ class UsuarioController extends Controller
 
         return response()->json(['message' => 'Usuario eliminado correctamente'], 200);
     }
+
+
+
+    //login
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('MiToken')->plainTextToken; // Crear el token
+            return ['token' => $token->plainTextToken]; 
+            return response()->json([
+                'token' => $token,
+                'user' => $user
+            ], 200);
+        }
+
+        return response()->json(['message' => 'Credenciales inválidas'], 401);
+    }
+
 }

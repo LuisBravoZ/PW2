@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DatoPersonalController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,4 +18,15 @@ Route::post('/usuario',[UsuarioController::class,'store'])->name('usaurio.create
 Route::delete('/usuario/{id}',[UsuarioController::class,'destroy'])->name('usuario.destroy');//borrar un usuario
 Route::put('/usuario/{id}',[UsuarioController::class,'update'])->name('usuario.update');//actuaizar usuario
 
-//
+//crud  de dato personal la cual esta ligado a usuario(paciente) y user(nutricionista-admi)
+
+Route:: get('/datop',[DatoPersonalController::class,'index'])->name('dato-personal.index');
+Route:: get('/datop/{id}',[DatoPersonalController::class,'show'])->name('dato-personal.show');
+
+/* Route::middleware('auth')->group(function () {
+    Route::get('/datos-personales', [DatoPersonalController::class, 'index']);
+    Route::post('/datos-personales', [DatoPersonalController::class, 'store']);
+    Route::get('/datos-personales/{id}', [DatoPersonalController::class, 'show']);
+    Route::put('/datos-personales/{id}', [DatoPersonalController::class, 'update']);
+    Route::delete('/datos-personales/{id}', [DatoPersonalController::class, 'destroy']);
+}); */
